@@ -4,10 +4,8 @@ from random import randint
 from time import sleep
 
 botao = [
-    {'num': '0', 'cor': colors.ORANGE},
-    {'num': '1', 'cor': colors.BLUE},
-    {'num': '2', 'cor': colors.RED},
-    {'num': '3', 'cor': colors.PURPLE}
+    {'num': '0', 'cor': colors.ORANGE}, {'num': '1', 'cor': colors.BLUE}, 
+    {'num': '2', 'cor': colors.RED}, {'num': '3', 'cor': colors.PURPLE}
 ]
 
 ordemGame = []
@@ -28,20 +26,19 @@ def main(page: Page):
         keyboard.update()
         while(i < len(ordemGame)):
             corOriginal = btn[ordemGame[i]].bgcolor
+            corPiscada = colors.WHITE
             if(ordemGame[i] == 0):
-                btn[ordemGame[i]].bgcolor = colors.ORANGE_900
-                btn[ordemGame[i]].content.color = colors.ORANGE_900
+                corPiscada = colors.ORANGE_900
             elif(ordemGame[i] == 1):
-                btn[ordemGame[i]].bgcolor = colors.BLUE_900 
-                btn[ordemGame[i]].content.color = colors.BLUE_900 
+                corPiscada = colors.BLUE_900 
             elif(ordemGame[i] == 2):
-                btn[ordemGame[i]].bgcolor = colors.RED_900 
-                btn[ordemGame[i]].content.color = colors.RED_900
+                corPiscada = colors.RED_900 
             elif(ordemGame[i] == 3):
-                btn[ordemGame[i]].bgcolor = colors.PURPLE_900
-                btn[ordemGame[i]].content.color = colors.PURPLE_900
+                corPiscada = colors.PURPLE_900
             
-
+            btn[ordemGame[i]].bgcolor = corPiscada
+            btn[ordemGame[i]].content.color = corPiscada
+            
             if(i > 0):
                 if(btn[ordemGame[i]] == btn[ordemGame[i-1]]):
                     sleep(0.4)
@@ -64,19 +61,18 @@ def main(page: Page):
         global pos
         corOriginal = e.control.bgcolor
         clicado = e.control.content.value
+        corPiscada = colors.WHITE
         if(clicado == '0'):
-            e.control.bgcolor = colors.ORANGE_900
-            e.control.content.color = colors.ORANGE_900
+            corPiscada = colors.ORANGE_900
         elif(clicado == '1'):
-            e.control.bgcolor = colors.BLUE_900 
-            e.control.content.color = colors.BLUE_900 
+            corPiscada = colors.BLUE_900 
         elif(clicado == '2'):
-            e.control.bgcolor = colors.RED_900 
-            e.control.content.color = colors.RED_900
+            corPiscada = colors.RED_900 
         elif(clicado == '3'):
-            e.control.bgcolor = colors.PURPLE_900
-            e.control.content.color = colors.PURPLE_900
+            corPiscada = colors.PURPLE_900
         
+        e.control.bgcolor = corPiscada
+        e.control.content.color = corPiscada
 
         e.control.update()
         sleep(0.2)
@@ -85,16 +81,12 @@ def main(page: Page):
         e.control.content.color = corOriginal
         
         pos += 1
-        print(f"j: {e.control.content.value}")
-        print(f'pos: {pos}')
         if(int(clicado) != ordemGame[pos]):
-            print('a')
             page.go("/over")
         else:
             if(pos == len(ordemGame)-1):
                 ordemGame.append(randint(0,3))
                 e.control.update()
-                print(f'{ordemGame}')
                 box.content.value = f'Pontuação: {pos+1}'
                 box.update() 
                 sleep(1.5)
@@ -170,7 +162,6 @@ def main(page: Page):
                     "/config",
                     [
                         AppBar(title=Text("Configurações"), bgcolor=colors.SURFACE_VARIANT),
-                        # ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
                     ],
                 )
             )
