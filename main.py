@@ -16,7 +16,7 @@ pos = -1
 
 def main(page: Page):
     page.window_width = 250
-    page.window_height = 250
+    page.window_height = 400
     page.title = 'Jogo da memória'
     page.window_always_on_top = True
     
@@ -102,6 +102,9 @@ def main(page: Page):
         pos = -1
         ordemGame.clear()
         ordemGame.append(randint(0,3))
+        for c in range(4):
+            btn[c].bgcolor = botao[c]['cor']
+            btn[c].content.color = botao[c]['cor']
         box.content.value = f'Pontuação: {0}'
         box.update() 
         pass
@@ -124,10 +127,12 @@ def main(page: Page):
     )
     
     box = Container(
-        content=Text(value=f'Pontuação: {pos+1}', color="white"),
-        width=250,
+        content=Text(value=f'Pontuação: {pos+1}', color="black"),
+        width=120,
         height=40,
-        bgcolor="green"
+        border_radius=20,
+        bgcolor=colors.BLUE_300,
+        alignment=alignment.center
     )
     
     start = ElevatedButton("Start", on_click=mostrarOrdem)
@@ -139,8 +144,11 @@ def main(page: Page):
                 "/",
                 [
                     AppBar(title=Text("Pagina Inicial"), bgcolor=colors.SURFACE_VARIANT),
-                    ElevatedButton("JOGAR", on_click=prepararGame),
-                    ElevatedButton("CONFIGURAÇÕES", on_click=lambda _: page.go("/config"))
+                    Row([ElevatedButton("JOGAR", on_click=prepararGame),
+                        ElevatedButton("CONFIGURAÇÕES", on_click=lambda _: page.go("/config"))], 
+                        width=250, 
+                        alignment=MainAxisAlignment.CENTER
+                        )
                 ],
             )
         )
@@ -151,8 +159,7 @@ def main(page: Page):
                     [
                         AppBar(title=Text("Jogo de memorização"), bgcolor=colors.SURFACE_VARIANT),
                         keyboard,
-                        start,
-                        box
+                        Row([start, box], alignment=MainAxisAlignment.CENTER, width=250), 
                     ],
                 )
             )
