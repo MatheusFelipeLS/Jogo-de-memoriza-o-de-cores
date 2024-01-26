@@ -178,8 +178,11 @@ def main(page: Page):
                     "/over", 
                     [
                     AppBar(title=Text("Game over"), bgcolor=colors.SURFACE_VARIANT),
-                    ElevatedButton("INÍCIO", on_click=lambda _: page.go("/")),
-                    ElevatedButton("JOGAR NOVAMENTE", on_click=prepararGame)
+                    Row([ElevatedButton("INÍCIO", on_click=lambda _: page.go("/")),
+                    ElevatedButton("JOGAR NOVAMENTE", on_click=prepararGame)], 
+                        width=250, 
+                        alignment=MainAxisAlignment.CENTER
+                        )
                     ],
                 )
             )
