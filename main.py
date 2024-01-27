@@ -109,6 +109,7 @@ def main(page: Page):
         pos = -1
         ordemGame.clear()
         start.disabled=False
+        start.update()
         ordemGame.append(randint(0,3))
         for c in range(4):
             btn[c].bgcolor = botao[c]['cor']
