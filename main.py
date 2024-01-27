@@ -23,6 +23,13 @@ def main(page: Page):
     def mostrarOrdem(e=0):
         i = 0
         btn[0].disabled = btn[1].disabled = btn[2].disabled = btn[3].disabled = True 
+        
+        if '0' not in box.content.value:
+            start.disabled=True
+        else:
+            start.disabled=False
+        start.update()
+        
         keyboard.update()
         while(i < len(ordemGame)):
             corOriginal = btn[ordemGame[i]].bgcolor
@@ -101,6 +108,7 @@ def main(page: Page):
         global pos
         pos = -1
         ordemGame.clear()
+        start.disabled=False
         ordemGame.append(randint(0,3))
         for c in range(4):
             btn[c].bgcolor = botao[c]['cor']
@@ -144,11 +152,13 @@ def main(page: Page):
                 "/",
                 [
                     AppBar(title=Text("Pagina Inicial"), bgcolor=colors.SURFACE_VARIANT),
-                    Row([ElevatedButton("JOGAR", on_click=prepararGame),
-                        ElevatedButton("CONFIGURAÇÕES", on_click=lambda _: page.go("/config"))], 
-                        width=250, 
-                        alignment=MainAxisAlignment.CENTER
-                        )
+                    Column(controls=[Image(src="img_inicial.png", width=200, height=200),
+                        Row([ElevatedButton("JOGAR", on_click=prepararGame),
+                            ElevatedButton("CONFIGURAÇÕES", on_click=lambda _: page.go("/config"))], 
+                            width=250, 
+                            alignment=MainAxisAlignment.CENTER
+                            )
+                    ])
                 ],
             )
         )
